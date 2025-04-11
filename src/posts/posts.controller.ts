@@ -14,7 +14,6 @@ export class PostsController {
 
   @Get()
   findAll() {
-    console.log('masuk findAll kah?');
     return this.postsService.findAll();
   }
 
