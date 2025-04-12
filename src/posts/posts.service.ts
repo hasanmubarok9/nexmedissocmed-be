@@ -35,7 +35,13 @@ export class PostsService {
             createdAt: true,
           }
         },
-        likes: true,
+        likes: {
+          select: {
+            id: true,
+            userId: true,
+            postId: true,
+          },
+        },
       },
     });
   }

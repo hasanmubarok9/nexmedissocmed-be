@@ -5,13 +5,15 @@ import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
+import { LikesModule } from './likes/likes.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     PrismaModule,
     PostsModule,
-    CommentsModule
+    CommentsModule,
+    LikesModule
   ],
   controllers: [AppController],
   providers: [AppService],
