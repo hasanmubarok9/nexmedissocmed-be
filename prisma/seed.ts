@@ -1,25 +1,31 @@
 import { PrismaClient } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
+const roundsOfHashing = 10;
 
 async function main() {
   const user1 = await prisma.user.upsert({
     where: { email: 'hasan.mubarok@gmail.com' },
-    update: {},
+    update: {
+      password: await bcrypt.hash('passwordhasan', roundsOfHashing),      
+    },
     create: {
       email: 'hasan.mubarok@gmail.com',
       name: 'Hasan Mubarok',
-      password: 'password',
+      password: await bcrypt.hash('passwordhasan', roundsOfHashing),
     },
   });
 
   const user2 = await prisma.user.upsert({
     where: { email: 'john.doe@gmail.com' },
-    update: {},
+    update: {
+      password: await bcrypt.hash('passwordjohn', roundsOfHashing),
+    },
     create: {
       email: 'john.doe@gmail.com',
       name: 'John Doe',
-      password: 'password',
+      password: await bcrypt.hash('passwordjohn', roundsOfHashing),
     },
   });
 
@@ -62,6 +68,8 @@ async function main() {
       userId: user1.id,
     },
   });
+
+  console.log('Database seeded successfully');
 }
 
 main()
