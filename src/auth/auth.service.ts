@@ -2,8 +2,10 @@ import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/co
 import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
 
+const roundsOfHashing = 10;
 @Injectable()
 export class AuthService {
     constructor(private prisma: PrismaService, private jwtService: JwtService) {}
@@ -25,6 +27,18 @@ export class AuthService {
 
         return {
             accessToken: this.jwtService.sign({ userId: user.id }),
+        }
+    }
+
+    async register(registerDto: RegisterDto) {
+        const hashedPassword = await bcrypt.hash(registerDto.password, roundsOfHashing);
+        const user = await this.prisma.user.create({
+            data: { ...registerDto, password: hashedPassword },
+        });
+
+        return {
+            message: 'User registered successfully',
+            user,
         }
     }
 }
