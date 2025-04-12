@@ -25,7 +25,19 @@ export class PostsService {
             name: true,
           },
         },
-        comments: true,
+        comments: {
+          select: {
+            id: true,
+            content: true,
+            user: {
+              select: { id: true, name: true },
+            },
+            createdAt: true,
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
         likes: true,
       },
     });

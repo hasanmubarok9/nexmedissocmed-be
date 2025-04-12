@@ -42,6 +42,26 @@ async function main() {
       userId: user2.id,
     },
   });
+
+  const comment1 = await prisma.comment.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      content: 'Hope you have a great day!',
+      postId: post1.id,
+      userId: user2.id,
+    },
+  });
+
+  const comment2 = await prisma.comment.upsert({
+    where: { id: 2 },
+    update: {},
+    create: {
+      content: 'Cool!',
+      postId: post2.id,
+      userId: user1.id,
+    },
+  });
 }
 
 main()
