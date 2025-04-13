@@ -21,7 +21,6 @@ export class UploadsController {
 
   @Get('presigned-url/:key')
   async getPresignedUrlForViewing(@Param('key') key: string) {
-    console.log("nilai key: ", key);
     const url = await this.uploadsService.getPresignedUrlForViewing(key);
     return { url };
   }
